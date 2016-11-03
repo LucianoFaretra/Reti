@@ -1,0 +1,5 @@
+10:17:17 **** Clean-only build of configuration Debug for project Esonero_client ****
+rm -rf connection.d main.o initializeEnvironment.o main.d initializeEnvironment.d sendReceive.o Esonero_client sendReceive.d connection.o 
+
+10:17:18 Build Finished (took 65ms)
+
