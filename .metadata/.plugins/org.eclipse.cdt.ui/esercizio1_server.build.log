@@ -1,7 +1,0 @@
-07:47:42 **** Clean-only build of configuration Debug for project esercizio1_server ****
-make clean 
-rm -rf  ./connection.o ./initializeEnvironment.o ./main.o ./operation.o ./sendReceive.o  ./connection.d ./initializeEnvironment.d ./main.d ./operation.d ./sendReceive.d  esercizio1_server
- 
-
-07:47:43 Build Finished (took 63ms)
-

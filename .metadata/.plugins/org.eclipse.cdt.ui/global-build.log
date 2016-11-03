@@ -1,4 +1,0 @@
-10:17:24 **** Clean-only build of configuration Debug for project Esonero_server ****
-make clean 
-rm -rf  ./connection.o ./initializeEnvironment.o ./main.o ./sendReceive.o  ./connection.d ./initializeEnvironment.d ./main.d ./sendReceive.d  Esonero_server
- 

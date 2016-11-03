@@ -1,5 +1,0 @@
-07:47:39 **** Clean-only build of configuration Debug for project esercizio1_client ****
-rm -rf sendReceive.o connection.d initializeEnvironment.d esercizio1_client connection.o main.d initializeEnvironment.o sendReceive.d main.o 
-
-07:47:39 Build Finished (took 64ms)
-
