@@ -25,6 +25,7 @@ void ClearWinSock() {
  */
 int creazioneSocket(int* Csocket){
 	int esito = 0;
+
 	*Csocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (Csocket < 0) {
 		ErrorHandler("socket creation failed.\n");
