@@ -97,7 +97,7 @@ void startServerCycle(struct sockaddr_in *cad, int socket, unsigned int* cadSize
 
             escapeValue = 0;
 			while( escapeValue == 0 ){	/*Close connection with escape set to 1*/
-                vowel_numb = receiveStringCalculateVolweSendtoClientResult(cad, socket, cadSize, string, vowel_numb);
+                vowel_numb = receiveStringCalculateVowelSendtoClientResult(cad, socket, cadSize, string, vowel_numb);
                 if((vowel_numb % EVEN) == 0){ /*If a even number of vowel escape*/
 					escapeValue = 1;
 				}
