@@ -62,3 +62,52 @@ int receive_string(int socket, char *buf, struct sockaddr_in *cad, unsigned int 
     }
     return(result);
 }
+
+
+/*!
+ * Send an int to the connected client client
+ * @param intToSend - int to send
+ * @param socket - Communication socket
+ * @param cad - Client address structure containing the client information for communication propuse
+ * @param cadSize - Size of cad structure
+ * @return - Return a bool result, 0 for success, 1 for fault
+ *
+ * @var convertedInt - converted int to send
+ */
+int send_int(int intToSend, int socket, struct sockaddr_in *cad, unsigned int cadSize) {
+    int result = 0;
+    int32_t convertedInt;
+
+    convertedInt = htonl(intToSend);
+    if (sendto(socket, &convertedInt, sizeof(convertedInt), 0, (struct sockaddr*)cad, cadSize) != sizeof(convertedInt)){
+        ErrorHandler("send() sent a different number of bytes than expected");
+        result = 1;
+    }
+    return(result);
+}
+
+/*!
+ * Receive an int from the server
+ * @param socket - communication socket
+ * @param receivedInt - received string
+ * @param cad - structure containing the client to connect information
+ * @param cadSize - size of cad structure
+ * @return - bool response, 0 for success, 1 for fault
+ */
+int receive_int(int socket, int *receivedInt, struct sockaddr_in *cad, unsigned int *cadSize) {
+
+    ssize_t bytesRcvd;
+    int result = 0;
+    int32_t notConvertedInt;
+
+    if ((bytesRcvd = recvfrom(socket, &notConvertedInt, sizeof(notConvertedInt), 0, (struct sockaddr*)cad, cadSize)) == sizeof(notConvertedInt)) {
+        *receivedInt = ntohl(notConvertedInt);
+    }
+    else{
+        ErrorHandler("recv() failed or connection closed prematurely");
+        closesocket(socket);
+        ClearWinSock();
+        result = 1;
+    }
+    return(result);
+}

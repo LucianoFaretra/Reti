@@ -48,16 +48,6 @@ void defineServerIp(struct sockaddr_in *sad){
 }
 
 /*!
- * Close the socket
- * @param socket  - Socket to close
- */
-void closeConnection(int socket){
-	closesocket(socket);
-	ClearWinSock();
-	return;
-}
-
-/*!
  * Bind ip to socket
  * @param socket - Socket to bind
  * @param sad - Pointer to Server Address structure

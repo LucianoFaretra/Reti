@@ -26,7 +26,6 @@ int main(void) {
 
     memset(&sad, 0, sizeof(sad));
     sadSize=sizeof(sad);
-    //TODO Lettura da stdin hoste numero porta
     printf("Insert Server hostname: ");
     scanf("%s", hostnameServer);
 
@@ -34,7 +33,7 @@ int main(void) {
         if(defineServerIpByHostname(&sad, hostnameServer) == 0) {
 
             do {
-                nmbVowel = serverCycle(clientSocket, &sad, welcomeString, stringa2, nmbVowel, &sadSize);
+                nmbVowel = serverCycle(clientSocket, &sad, welcomeString, stringa2, &sadSize);
             } while ((nmbVowel % EVEN) != 0);//Exit from cycle if the nbr of vowes is EVEN
         }
 

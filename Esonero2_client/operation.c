@@ -23,24 +23,24 @@ void cleanString(char* string) {
  * @param sad - server information
  * @param welcomeString - welcome string
  * @param stringa2 - buffer string
- * @param nmbVowel - var containing vowel numbers
+ * @var nmbVowel - var containing vowel numbers
  * @param sadSize - size of the sad struct
  * @return nmbVowel - return the number of vowel
  */
-int serverCycle(int clientSocket, struct sockaddr_in *sad, char *welcomeString, char *stringa2,
-                int nmbVowel, unsigned int *sadSize) {
+int serverCycle(int clientSocket, struct sockaddr_in *sad, char *welcomeString, char *stringa2, unsigned int *sadSize) {
     send_string(welcomeString, clientSocket, (int) strlen(welcomeString), sad, sizeof((*sad)));
     receive_string(clientSocket, stringa2, sad, sadSize);
     puts(stringa2);
+
+    int nmbVowel;
 
     cleanString(stringa2);
     printf("Insert an alphanumeric string: ");
     scanf("%s", stringa2);
     send_string(stringa2, clientSocket, (int) strlen(welcomeString), sad, sizeof((*sad)));
 
-    cleanString(stringa2);
-    receive_string(clientSocket, stringa2, sad, sadSize);
-    nmbVowel = atoi(stringa2);
+    //TODO receive a int
+    receive_int(clientSocket, &nmbVowel, sad, sadSize);
 
     if ((nmbVowel % EVEN) == 0) {
         printf("%d: Numero di vocali pari. Fine esecuzione", nmbVowel);
