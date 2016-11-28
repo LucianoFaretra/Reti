@@ -12,7 +12,7 @@ unsigned int string_vowel_analyzer(char* string_to_analyze);
 void cleanString(char* string);
 void convertInToString(int vowel_numb, char* string);
 unsigned int ifVowel(char oneChar);
-int receiveStringCalculateVolweSendtoClientResult(struct sockaddr_in *cad, int socket, unsigned int *cadSize,
+int receiveStringCalculateVowelSendtoClientResult(struct sockaddr_in *cad, int socket, unsigned int *cadSize,
                                                   char *string, int vowel_numb);
 
 #endif /* OPERATION_H_ */

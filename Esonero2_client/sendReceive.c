@@ -78,7 +78,7 @@ int send_int(int intToSend, int socket, struct sockaddr_in *cad, unsigned int ca
     int32_t convertedInt;
 
     convertedInt = htonl(intToSend);
-    if (sendto(socket, &convertedInt, sizeof(convertedInt), 0, (struct sockaddr *)cad, cadSize) != BUFFERSIZE) {// INVIA DATI AL SERVER
+    if (sendto(socket, &convertedInt, sizeof(convertedInt), 0, (struct sockaddr *)cad, cadSize) != sizeof(convertedInt)) {// INVIA DATI AL SERVER
         ErrorHandler("send() sent a different number of bytes than expected");
         result = 1;
     }

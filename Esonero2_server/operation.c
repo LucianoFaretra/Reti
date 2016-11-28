@@ -75,7 +75,7 @@ void convertInToString(int vowel_numb, char* string){
  * @return - Return the number of vowel in string param
  */
 int
-receiveStringCalculateVolweSendtoClientResult(struct sockaddr_in *cad, int socket, unsigned int *cadSize,
+receiveStringCalculateVowelSendtoClientResult(struct sockaddr_in *cad, int socket, unsigned int *cadSize,
                                               char *string, int vowel_numb) {
     receive_string(socket, string, cad, cadSize); /*Receive string to analyze*/
     puts(string);
