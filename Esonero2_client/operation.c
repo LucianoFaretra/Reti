@@ -21,31 +21,25 @@ void cleanString(char* string) {
  * Do the server operation
  * @param clientSocket - socket for communication
  * @param sad - server information
- * @param welcomeString - welcome string
- * @param stringa2 - buffer string
+ * @param string2 - buffer string
  * @var nmbVowel - var containing vowel numbers
  * @param sadSize - size of the sad struct
  * @return nmbVowel - return the number of vowel
  */
-int serverCycle(int clientSocket, struct sockaddr_in *sad, char *welcomeString, char *stringa2, unsigned int *sadSize) {
-    send_string(welcomeString, clientSocket, (int) strlen(welcomeString), sad, sizeof((*sad)));
-    receive_string(clientSocket, stringa2, sad, sadSize);
-    puts(stringa2);
-
+int serverCycle(int clientSocket, struct sockaddr_in *sad, char *string2, unsigned int *sadSize) {
     int nmbVowel;
 
-    cleanString(stringa2);
+    cleanString(string2);
     printf("Insert an alphanumeric string: ");
-    scanf("%s", stringa2);
-    send_string(stringa2, clientSocket, (int) strlen(welcomeString), sad, sizeof((*sad)));
+    scanf("%s", string2);
+    send_string(string2, clientSocket, (int) strlen(string2), sad, sizeof((*sad)));
 
-    //TODO receive a int
     receive_int(clientSocket, &nmbVowel, sad, sadSize);
 
     if ((nmbVowel % EVEN) == 0) {
-        printf("%d: Numero di vocali pari. Fine esecuzione", nmbVowel);
+        printf("%d: Numero di vocali pari. Fine esecuzione\n", nmbVowel);
     } else {
-        printf("%d: Numero di vocali dispari. Continua l'inserimento", nmbVowel);
+        printf("%d: Numero di vocali dispari. Continua l'inserimento\n", nmbVowel);
     }
     return nmbVowel;
 }

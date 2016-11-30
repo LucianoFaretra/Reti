@@ -20,7 +20,9 @@
 #include <stdlib.h>
 #include <string.h>
 #define BUFFERSIZE 500 //Grandezza buffer invio/ricezione
-#define PROTOPORT 18000 // Numero di porta di default
 #define EVEN 2
+#define PORTMIN 1024
+#define PORTMAX 49151
+#define DEFPORT 18000
 
 #endif /* DATI_GLOBALI_H_ */

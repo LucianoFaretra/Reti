@@ -9,9 +9,8 @@
 #define CONNECTION_H_
 
 int socketCreation(int *clientSocket);
-int defineServerIpByHostname(struct sockaddr_in *sad, char *hostnameServer);
+int defineServerIpByHostname(struct sockaddr_in *sad, char *hostnameServer, unsigned short serverPort);
 void ClearWinSock();
-int connectionToServer(int Csocket, struct sockaddr_in* sad, size_t structSize);
 void closeConnection(int socket);
 
 #endif /* CONNECTION_H_ */

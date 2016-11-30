@@ -78,7 +78,7 @@ int send_int(int intToSend, int socket, struct sockaddr_in *cad, unsigned int ca
     int32_t convertedInt;
 
     convertedInt = htonl(intToSend);
-    if (sendto(socket, &convertedInt, sizeof(convertedInt), 0, (struct sockaddr *)cad, cadSize) != sizeof(convertedInt)) {// INVIA DATI AL SERVER
+    if (sendto(socket, &convertedInt, sizeof(convertedInt), 0, (struct sockaddr *)cad, cadSize) != sizeof(convertedInt)) {
         ErrorHandler("send() sent a different number of bytes than expected");
         result = 1;
     }
@@ -88,7 +88,7 @@ int send_int(int intToSend, int socket, struct sockaddr_in *cad, unsigned int ca
 /*!
  * Receive an int from the server
  * @param socket - communication socket
- * @param receivedInt - received string
+ * @param receivedInt - received int converted
  * @param cad - structure containing the client to connect information
  * @param cadSize - size of cad structure
  * @return - bool response, 0 for success, 1 for fault
@@ -97,7 +97,7 @@ int receive_int(int socket, int *receivedInt, struct sockaddr_in *cad, unsigned 
 
     ssize_t bytesRcvd;
     int result = 0;
-    int32_t notConvertedInt;
+    uint32_t notConvertedInt;
 
     if ((bytesRcvd = recvfrom(socket, &notConvertedInt, sizeof(notConvertedInt), 0, (struct sockaddr*)cad, cadSize)) == sizeof(notConvertedInt)) {
         *receivedInt = ntohl(notConvertedInt);

@@ -80,7 +80,6 @@ receiveStringCalculateVowelSendtoClientResult(struct sockaddr_in *cad, int socke
     receive_string(socket, string, cad, cadSize); /*Receive string to analyze*/
     puts(string);
     vowel_numb = string_vowel_analyzer(string);
-    printf("The nmb of vowel present in the printed string is: %d\n", vowel_numb);
     send_int(vowel_numb, socket, cad, *cadSize);
     return vowel_numb;
 }

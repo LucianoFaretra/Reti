@@ -43,7 +43,7 @@ int socketCreation(int *clientSocket){
  * @var host - hostnet struct
  * @var result - bool, 0 success, 1 fault
  */
-int defineServerIpByHostname(struct sockaddr_in *sad, char *hostnameServer) {
+int defineServerIpByHostname(struct sockaddr_in *sad, char *hostnameServer, unsigned short serverPort) {
     struct hostent* host;
     int result = 0;
     host = gethostbyname(hostnameServer);
@@ -51,7 +51,7 @@ int defineServerIpByHostname(struct sockaddr_in *sad, char *hostnameServer) {
         unsigned long ul = *((unsigned long *) host->h_addr_list[0]);
         sad->sin_family = AF_INET;
         (*sad).sin_addr.s_addr = (in_addr_t)ul; // IP del server
-        sad->sin_port = htons(PROTOPORT); // Server port
+        sad->sin_port = htons(serverPort); // Server port
     }
     else{
         fprintf(stderr, "gethostbyname() failed.\n");
@@ -68,4 +68,29 @@ void closeConnection(int socket){
 	closesocket(socket);
 	ClearWinSock();
 	return;
+}
+
+/*!
+ * Read an int, if in range with unassigned user port return the port to the caller
+ * @var numPort - var containing the port read from stdin
+ * @var success - bool success status, 1 success, 0 fault
+ * @def PORTMIN - minimum port accepted
+ * @def PORTMAX - maxinum port accepted
+ * @return numPort - The port of the server
+ */
+unsigned short readConnectionPortNumber() {
+    unsigned short numPort;
+    int success;
+    do {
+        printf("Inserire una porta compresa tra 1024 e 49151, port di default: %d: ", DEFPORT);
+        scanf("%hu", &numPort);
+        if(numPort >= PORTMIN && numPort <= PORTMAX){
+            success = 1;
+        }
+        else{
+            printf("Porta %d non disponibile, ripetere l'inserimento!\n", numPort);
+            success = 0;
+        }
+    }while(success == 0);
+    return(numPort);
 }

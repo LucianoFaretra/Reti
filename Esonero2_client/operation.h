@@ -9,6 +9,7 @@
 #define OPERATION_H_
 
 void cleanString(char* string);
-int serverCycle(int clientSocket, struct sockaddr_in *sad, char *welcomeString, char *stringa2, unsigned int *sadSize);
+int serverCycle(int clientSocket, struct sockaddr_in *sad, char *string2, unsigned int *sadSize);
+unsigned short readConnectionPortNumber();
 
 #endif /* OPERATION_H_ */
