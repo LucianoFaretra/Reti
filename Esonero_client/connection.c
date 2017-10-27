@@ -39,10 +39,10 @@ int creazioneSocket(int* Csocket){
  *Assegna alla struttura sad - serveraddress - i dati del server
  *PROTOPORT = varibiale globale contenente la porta utilizzata dal server
  */
-void costruzioneIpServer(struct sockaddr_in* sad){
+void costruzioneIpServer(struct sockaddr_in* sad, char* serverIpAddress, u_short serverPort){
 	sad->sin_family = AF_INET;
-	(*sad).sin_addr.s_addr = inet_addr("127.0.0.1"); // IP del server
-	sad->sin_port = htons(PROTOPORT); // Server port
+	(*sad).sin_addr.s_addr = inet_addr(serverIpAddress); // IP del server
+	sad->sin_port = htons(serverPort); // Server port
 	return;
 }
 

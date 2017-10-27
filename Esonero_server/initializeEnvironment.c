@@ -17,7 +17,7 @@ void winSock(){
 	int iResult = WSAStartup(MAKEWORD(2 ,2), &wsaData);
 	if (iResult != 0) {
 		printf ("error at WSASturtup\n");
-		return 0;
+		return;
 	}
 #endif
 }

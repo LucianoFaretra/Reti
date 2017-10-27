@@ -20,6 +20,12 @@
 #include <stdlib.h>
 #include <string.h>
 #define BUFFERSIZE 512 //Grandezza buffer invio/ricezione
-#define PROTOPORT 10000 // Numero di porta di default
+
+typedef struct{
+    char* stringaA;
+    char* stringaB;
+    char* stringaC;
+}triplaStringhe;
+
 
 #endif /* DATI_GLOBALI_H_ */

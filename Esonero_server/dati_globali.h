@@ -24,5 +24,11 @@
 #define QLEN 6 // size of request queue
 #define PROTOPORT 10000 // Numero di porta di default
 #define INTMAX 100		//Massimo intero accettato altrimenti chiudi connessione con client
+typedef struct{
+    char stringaA[BUFFERSIZE];
+    char stringaB[BUFFERSIZE];
+    char stringaC[BUFFERSIZE];
+}triplaStringhe;
+
 
 #endif /* DATI_GLOBALI_H_ */

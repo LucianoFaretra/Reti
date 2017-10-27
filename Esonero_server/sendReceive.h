@@ -8,8 +8,9 @@
 #ifndef SENDRECEIVE_H_
 #define SENDRECEIVE_H_
 
-int send_string(char* stringa, int Csocket, unsigned int stringLen);
+int send_string(const char *stringa, int Csocket, unsigned int stringLen);
 int receive_string(int Rsocket, char buf[BUFFERSIZE]);
+int receive_triplaStringhe(triplaStringhe *daInviare, int Ssocket);
 
 
 #endif /* SENDRECEIVE_H_ */

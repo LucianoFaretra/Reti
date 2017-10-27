@@ -14,32 +14,63 @@ int main(void) {
 	int Csocket;
 	struct sockaddr_in sad;
 	memset(&sad, 0, sizeof(sad));
-	char stringa1[BUFFERSIZE] = { "" }; //Inizializza la stringa vuota
-	//char stringa2[BUFFERSIZE] = { "" }; //Inizializza la stringa vuota
-	char* stringa2;
-	char stringa_quit[BUFFERSIZE] = {"QUIT"};
+	char stringa_quit[BUFFERSIZE] = {"bye"};
+    char stringaBenvenutoServer[BUFFERSIZE];
+    char ipServer[16];                                                                                                     //Variabile contenente l'indirizzo IP del server
+    u_short serverPort;
+    triplaStringhe triplaInvioRicevi = {NULL, NULL, NULL};
+    char rispostaElaborazione[BUFFERSIZE];
 
 	winSock(); //Int Socket se windows
 
-	if (creazioneSocket(&Csocket) == 0) { // CREAZIONE DELLA SOCKET
-		costruzioneIpServer(&sad); // COSTRUZIONE DELL’INDIRIZZO DEL SERVER
+    printf("Inserisci l'indirizzo IP del server da contattare: ");
+    scanf("%s", ipServer);
+    puts("");
+    printf("Inserisci la porta con cui contattare il server: ");
+    puts("");
+    scanf("%hu", &serverPort);
+
+
+
+    if (creazioneSocket(&Csocket) == 0) { // CREAZIONE DELLA SOCKET
+		costruzioneIpServer(&sad, ipServer, serverPort); // COSTRUZIONE DELL’INDIRIZZO DEL SERVER
 
 		if (connectionToServer(Csocket, &sad, sizeof(sad)) == 0) { // CONNESSIONE AL SERVER
-			receive_string(Csocket, stringa1); // RICEVERE DATI DAL SERVER
+			receive_string(Csocket, stringaBenvenutoServer); // RICEVERE DATI DAL SERVER
+            puts(stringaBenvenutoServer);
 
-			do{
-				if(stringa2 != NULL){
-					free(stringa2);
-					stringa2 = NULL;
+            do{
+				if(triplaInvioRicevi.stringaA != NULL){
+					free(triplaInvioRicevi.stringaA);
+                    triplaInvioRicevi.stringaA = NULL;
 				}
-				stringa2 = (char*)malloc(BUFFERSIZE * sizeof(char));
-				puts("");
-				printf("inserire un intero: ");
+                if(triplaInvioRicevi.stringaB != NULL){
+                    free(triplaInvioRicevi.stringaB);
+                    triplaInvioRicevi.stringaB = NULL;
+                }
+                if(triplaInvioRicevi.stringaC != NULL){
+                    free(triplaInvioRicevi.stringaC);
+                    triplaInvioRicevi.stringaC = NULL;
+                }
 
-				scanf("%s", stringa2);								//Leggi primo intero
-				send_string(stringa2, Csocket, sizeof(stringa2));	//Invia stringa con intero al server
-				receive_string(Csocket, stringa2);					//Ricevi esito elaborazione
-			}while(strcmp(stringa2, stringa_quit) != 0);			//Se ricevo quit, esco dal ciclo
+                triplaInvioRicevi.stringaA = (char*) calloc (BUFFERSIZE,sizeof(char));
+                triplaInvioRicevi.stringaB = (char*) calloc (BUFFERSIZE,sizeof(char));
+                triplaInvioRicevi.stringaC = (char*) calloc (BUFFERSIZE,sizeof(char));
+
+
+				puts("");
+				printf("inserire il contenuto della stringa A: ");
+				scanf("%s", triplaInvioRicevi.stringaA);            //Leggi la stringa A
+				puts("");
+				printf("inserire il contenuto della stringa B: ");
+				scanf("%s", triplaInvioRicevi.stringaB);            //Leggi la stringa A
+
+                if(send_triplaStringhe(triplaInvioRicevi, Csocket) == 0){
+                    if(receive_string(Csocket, rispostaElaborazione) == 0){
+                        puts(rispostaElaborazione);
+                    }
+                }
+			}while(strcmp(rispostaElaborazione, stringa_quit) != 0);			//Se ricevo quit, esco dal ciclo
 
 			closeConnection(Csocket); 							// CHIUSURA DELLA CONNESSIONE
 			printf("\n"); // Print a final linefeed

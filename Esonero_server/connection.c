@@ -161,8 +161,9 @@ int setSocketInAscolto(int serverSocket){
  *
  */
 void avviaRoutineServer(struct sockaddr_in* cad, int serverSocket, int* clientSocket, unsigned int* cadSize ){
-	char stringa1[BUFFERSIZE] = {""};
-	char stringa_QUIT[BUFFERSIZE] = {"QUIT"};
+	triplaStringhe triplaStringhe1;
+	char stringa_QUIT[BUFFERSIZE] = {"bye"};
+	char stringa_CONTAIN[BUFFERSIZE] = {"quit"};
 	char stringa_CONTINUE[BUFFERSIZE] = {"CONTINUE"};
 	char* stringaBenvenuto = "connessione avvenuta";
 	int stringLen = strlen(stringaBenvenuto); // Determina la lunghezza stringa benvenuto
@@ -182,14 +183,16 @@ void avviaRoutineServer(struct sockaddr_in* cad, int serverSocket, int* clientSo
 		if(send_string(stringaBenvenuto, *clientSocket, stringLen) == 0){	//Invia stringa di benvenuto
 			exit = 0;														//Inizializza valore escape
 			while( exit == 0){												//Controlla se deve chiudere la connessione al client
-				if(receive_string(*clientSocket, stringa1) == 0){			//Riceve una stringa dal client
-					if(atoi(stringa1)>INTMAX){									//Interpreta la stringa come intero e valuta se maggiore o monore di INTMAX
-						send_string(stringa_QUIT, *clientSocket, BUFFERSIZE);		//Invia la stringa al client Per chiudere la connessione
-						exit = 1;													//Setta il valore di exit per terminare la routine
-					}
-					else{
-						send_string(stringa_CONTINUE, *clientSocket, BUFFERSIZE);		//Invia la stringa al client per continuare la connessione
-					}
+
+				if(receive_triplaStringhe(&triplaStringhe1, *clientSocket) == 0){			//Riceve una struct dal client
+					if ((strstr(triplaStringhe1.stringaA, stringa_CONTAIN) != NULL) || (strstr(triplaStringhe1.stringaB, stringa_CONTAIN) != NULL)) {
+                        send_string(stringa_QUIT, *clientSocket, strlen(stringa_QUIT));		        //Invia la stringa al client Per chiudere la connessione
+                        exit = 1;
+                    }else{
+                        strcpy(triplaStringhe1.stringaC, triplaStringhe1.stringaA );
+                        strcat(triplaStringhe1.stringaC, triplaStringhe1.stringaB);
+                        send_string(triplaStringhe1.stringaC, *clientSocket, strlen(triplaStringhe1.stringaC));
+                    }
 				}
 			}
 		}

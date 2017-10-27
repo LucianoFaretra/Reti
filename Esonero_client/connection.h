@@ -9,7 +9,7 @@
 #define CONNECTION_H_
 
 int creazioneSocket(int* Csocket);
-void costruzioneIpServer(struct sockaddr_in* sad);
+void costruzioneIpServer(struct sockaddr_in* sad, char* serverIpAddress, u_short serverPort);
 void ClearWinSock();
 int connectionToServer(int Csocket, struct sockaddr_in* sad, size_t structSize);
 void closeConnection(int socket);
