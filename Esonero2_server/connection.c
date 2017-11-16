@@ -77,11 +77,13 @@ int bindIp(int socket, struct sockaddr_in* sad, size_t sadSize){
  */
 void startServerCycle(struct sockaddr_in *cad, int socket, unsigned int* cadSize){
 	char string[BUFFERSIZE] = {""};
-    char* welcomeString = "OK";
+    char *welcomeString = "messaggio ricevuto";
 	int escapeValue;
-	int vowel_numb = 0;
     struct hostent* host;
     struct in_addr addr;
+    triplaStringhe *triplaStringhe1 = (triplaStringhe *) calloc(1, sizeof(triplaStringhe));
+    char stringa_QUIT[BUFFERSIZE] = {"bye"};
+    char stringa_CONTAIN[BUFFERSIZE] = {"quit"};
 
 	/*puts("Waiting for a client to connect...");*/
 	for (;;) { //Infinite loop for server execution
@@ -90,16 +92,33 @@ void startServerCycle(struct sockaddr_in *cad, int socket, unsigned int* cadSize
         addr.s_addr = inet_addr(inet_ntoa( cad->sin_addr ));
         host = gethostbyaddr((char *)&addr, 4, AF_INET);
         char* canonical_name = host->h_name;
-		printf( "%s ricevuto dal client con nome host: %s\n", string, canonical_name );
+        printf("Stringa '%s' ricevuta dal client con nome host: %s\n", string, canonical_name);
 
         /* Send a welcome string to the connected client */
 		if( send_string( welcomeString, socket, (int)strlen(welcomeString), cad, *cadSize ) == 0 ){
 
             escapeValue = 0;
 			while( escapeValue == 0 ){	/*Close connection with escape set to 1*/
-                vowel_numb = receiveStringCalculateVowelSendtoClientResult(cad, socket, cadSize, string, vowel_numb);
-                if((vowel_numb % EVEN) == 0){ /*If a even number of vowel escape*/
-					escapeValue = 1;
+                if (receive_triplaStringhe(triplaStringhe1, socket, cad, *cadSize) ==
+                    0) {            //Riceve una struct dal client
+                    if ((strstr(triplaStringhe1->stringaA, stringa_CONTAIN) != NULL) ||
+                        (strstr(triplaStringhe1->stringaB, stringa_CONTAIN) != NULL)) {
+                        cleanString(triplaStringhe1->stringaC);
+                        strcpy(triplaStringhe1->stringaC, stringa_QUIT);
+                        if ((send_triplaStringhe(triplaStringhe1, socket, cad, *cadSize) == 0)) {
+                            escapeValue = 1;
+                        } else {
+                            puts("Errore durante l'invio");
+                            escapeValue = 1;
+                        }
+                    } else {
+                        strcpy(triplaStringhe1->stringaC, triplaStringhe1->stringaA);
+                        strcat(triplaStringhe1->stringaC, triplaStringhe1->stringaB);
+                        if ((send_triplaStringhe(triplaStringhe1, socket, cad, *cadSize) == 1)) {
+                            puts("Errore durante l'invio");
+                            escapeValue = 1;
+                        }
+                    }
 				}
 			}
 		}

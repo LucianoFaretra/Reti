@@ -17,29 +17,81 @@ void cleanString(char* string) {
     memset( string, 0x00, BUFFERSIZE );
     return;
 }
-/*!
- * Do the server operation
- * @param clientSocket - socket for communication
- * @param sad - server information
- * @param string2 - buffer string
- * @var nmbVowel - var containing vowel numbers
- * @param sadSize - size of the sad struct
- * @return nmbVowel - return the number of vowel
- */
-int serverCycle(int clientSocket, struct sockaddr_in *sad, char *string2, unsigned int *sadSize) {
-    int nmbVowel;
 
-    cleanString(string2);
-    printf("Insert an alphanumeric string: ");
-    scanf("%s", string2);
-    send_string(string2, clientSocket, (int) strlen(string2), sad, sizeof((*sad)));
+char *serializeStruct(triplaStringhe daSerializzare, unsigned int elementSize) {
 
-    receive_int(clientSocket, &nmbVowel, sad, sadSize);
 
-    if ((nmbVowel % EVEN) == 0) {
-        printf("%d: Numero di vocali pari. Fine esecuzione\n", nmbVowel);
-    } else {
-        printf("%d: Numero di vocali dispari. Continua l'inserimento\n", nmbVowel);
+    char *serializzato = calloc(elementSize * 3, sizeof(char));
+    int index;
+
+    index = 0;
+    while (index < elementSize) {
+        serializzato[index] = daSerializzare.stringaA[index];
+        index++;
     }
-    return nmbVowel;
+
+    index = 0;
+    while (index < elementSize) {
+        serializzato[index + elementSize] = daSerializzare.stringaB[index];
+        index++;
+    }
+
+    index = 0;
+    while (index < elementSize) {
+        serializzato[index + elementSize + elementSize] = daSerializzare.stringaC[index];
+        index++;
+    }
+
+    return serializzato;
+}
+
+triplaStringhe *deSerializeStruct(char *daDeSerializzare, unsigned int elementSize) {
+
+
+    triplaStringhe *deSerializzato;
+
+    deSerializzato = (triplaStringhe *) calloc(1, sizeof(triplaStringhe));
+
+
+    deSerializzato->stringaA = (char *) calloc(elementSize, sizeof(char));
+    deSerializzato->stringaB = (char *) calloc(elementSize, sizeof(char));
+    deSerializzato->stringaC = (char *) calloc(elementSize, sizeof(char));
+
+    int index;
+
+    index = 0;
+    while (index < elementSize) {
+        deSerializzato->stringaA[index] = daDeSerializzare[index];
+        index++;
+    }
+
+    index = 0;
+    while (index < elementSize) {
+        deSerializzato->stringaB[index] = daDeSerializzare[index + BUFFERSIZE];
+        index++;
+    }
+
+    index = 0;
+    while (index < elementSize) {
+        deSerializzato->stringaC[index] = daDeSerializzare[index + BUFFERSIZE + BUFFERSIZE];
+        index++;
+    }
+
+    return deSerializzato;
+}
+
+
+void freeStruct(triplaStringhe *daLiberare) {
+    if (daLiberare->stringaA != NULL) {
+        free(daLiberare->stringaA);
+        daLiberare->stringaA = NULL;
+    }
+    if (daLiberare->stringaB != NULL) {
+        free(daLiberare->stringaB);
+        daLiberare->stringaB = NULL;
+    }
+    if (daLiberare->stringaC != NULL) {
+        free(daLiberare->stringaC);
+        daLiberare->stringaC = NULL;
+    }
 }

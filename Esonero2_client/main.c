@@ -15,12 +15,13 @@
 int main(void) {
 	int clientSocket;
 	struct sockaddr_in sad;
-    struct sockaddr_in fad;
-    char welcomeString[BUFFERSIZE] = { "Client Online..." }; //Inizializza la stringa vuota
+    char welcomeString[BUFFERSIZE] = {"Hello"}; //Inizializza la stringa vuota
     char string2[BUFFERSIZE] = {""};
-    int nmbVowel = 0;
+    char string3[BUFFERSIZE] = {""};
     unsigned int sadSize;
     char hostnameServer[BUFFERSIZE] = {""};
+    triplaStringhe triplaInvioRicevi = {NULL, NULL, NULL};
+    char stringa_quit[BUFFERSIZE] = {"bye"};
 
 	winSock(); //Int Socket se windows
 
@@ -35,9 +36,40 @@ int main(void) {
             send_string(welcomeString, clientSocket, (int)strlen(welcomeString), &sad, sizeof(sad));
             receive_string(clientSocket, string2, &sad, &sadSize);//Riceve eventuale OK
             puts(string2);//Stampa eventuale OK
+
             do {
-                nmbVowel = serverCycle(clientSocket, &sad, string2, &sadSize);
-            } while ((nmbVowel % EVEN) != 0);//Exit from cycle if the nbr of vowes is EVEN
+                freeStruct(&triplaInvioRicevi);
+
+                triplaInvioRicevi.stringaA = (char *) calloc(BUFFERSIZE, sizeof(char));
+                triplaInvioRicevi.stringaB = (char *) calloc(BUFFERSIZE, sizeof(char));
+                triplaInvioRicevi.stringaC = (char *) calloc(BUFFERSIZE, sizeof(char));
+
+                cleanString(string3);
+
+                puts("");
+                printf("inserire il contenuto della stringa A: ");
+                scanf("%s", string3);
+                strcpy(triplaInvioRicevi.stringaA, string3);
+                puts("");
+
+                cleanString(string3);
+                printf("inserire il contenuto della stringa B: ");
+                scanf("%s", string3);
+                strcpy(triplaInvioRicevi.stringaB, string3);
+
+
+                if (send_triplaStringhe(triplaInvioRicevi, clientSocket, &sad, sizeof(sad)) == 0) {
+
+                    freeStruct(&triplaInvioRicevi);
+                    if (receive_triplaStringhe(&triplaInvioRicevi, clientSocket, &sad, sizeof(sad)) == 0) {
+                        puts(triplaInvioRicevi.stringaC);
+                    }
+                } else {
+                    puts("Errore durante l'invio");
+                }
+            } while (strcmp(triplaInvioRicevi.stringaC, stringa_quit) != 0);            //Se ricevo quit, esco dal ciclo
+
+
         }
 
         closeConnection(clientSocket);

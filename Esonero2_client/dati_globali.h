@@ -20,9 +20,14 @@
 #include <stdlib.h>
 #include <string.h>
 #define BUFFERSIZE 500 //Grandezza buffer invio/ricezione
-#define EVEN 2
 #define PORTMIN 1024
 #define PORTMAX 49151
 #define DEFPORT 18000
+
+typedef struct {
+    char *stringaA;
+    char *stringaB;
+    char *stringaC;
+} triplaStringhe;
 
 #endif /* DATI_GLOBALI_H_ */

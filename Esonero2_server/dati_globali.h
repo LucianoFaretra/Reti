@@ -23,4 +23,13 @@
 #define BUFFERSIZE 500 //Grandezza buffer invio/ricezione
 #define PROTOPORT 18000 // Numero di porta di default
 #define EVEN 2
+
+typedef struct {
+    char *stringaA;
+    char *stringaB;
+    char *stringaC;
+} triplaStringhe;
+
+
+
 #endif /* DATI_GLOBALI_H_ */

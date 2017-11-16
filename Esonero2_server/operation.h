@@ -8,11 +8,13 @@
 #ifndef OPERATION_H_
 #define OPERATION_H_
 
-unsigned int string_vowel_analyzer(char* string_to_analyze);
 void cleanString(char* string);
-void convertInToString(int vowel_numb, char* string);
-unsigned int ifVowel(char oneChar);
-int receiveStringCalculateVowelSendtoClientResult(struct sockaddr_in *cad, int socket, unsigned int *cadSize,
-                                                  char *string, int vowel_numb);
+
+triplaStringhe *deSerializeStruct(char *daDeSerializzare, unsigned int elementSize);
+
+char *serializeStruct(triplaStringhe daSerializzare, unsigned int elementSize);
+
+void freeStruct(triplaStringhe *daLiberare);
+
 
 #endif /* OPERATION_H_ */

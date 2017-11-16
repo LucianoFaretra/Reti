@@ -10,7 +10,9 @@
 
 int send_string(char *stringa, int Ssocket, int stringLen, struct sockaddr_in *cad, unsigned int cadSize);
 int receive_string(int socket, char buf[BUFFERSIZE], struct sockaddr_in *cad, unsigned int *cadSize);
-int send_int(int intToSend, int socket, struct sockaddr_in *cad, unsigned int cadSize);
-int receive_int(int socket, int *receivedInt, struct sockaddr_in *cad, unsigned int *cadSize);
+
+int receive_triplaStringhe(triplaStringhe *ricevuta, int Ssocket, struct sockaddr_in *cad, unsigned int cadSize);
+
+int send_triplaStringhe(triplaStringhe ricevuta, int Ssocket, struct sockaddr_in *cad, unsigned int cadSize);
 
 #endif /* SENDRECEIVE_H_ */
